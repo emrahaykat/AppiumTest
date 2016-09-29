@@ -22,7 +22,7 @@ public abstract class DeviceSetup {
 			
 			File classpathRoot = new File(System.getProperty("user.dir"));
 			File appDir = new File(classpathRoot, "/Apps/apk/");
-			File app = new File(appDir, "com.tmob.markafoni.test_3.1.5-43_TEST_LIVE.apk");
+			File app = new File(appDir, "com.markafoni.apk");
 
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
@@ -30,7 +30,7 @@ public abstract class DeviceSetup {
 			capabilities.setCapability("platformVersion", "4.4");
 			capabilities.setCapability("platformName", "Android");
 			capabilities.setCapability("app", app.getAbsolutePath());
-			capabilities.setCapability("appPackage", "com.tmob.markafoni.test");
+			capabilities.setCapability("appPackage", "com.markafoni.test");
 			//capabilities.setCapability("appActivity", "com.tmob.markafoni.test.activity.MainActivity");
 
 			driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
