@@ -27,7 +27,6 @@ public class Register {
     	driver=setup.installApp();
     	MKFSelenium=new MarkafoniSeleniumFunctions(driver);	
 		MKFSelenium.isMenuClick();
-      
         
     }
 
@@ -44,8 +43,6 @@ public class Register {
     	Account account=new Account("Emrah", "Aykat", "test1@mkf.com", "12345", Gender.Male, "", "", "");
     	Agreement agreement=Agreement.Checked;
     	MKFSelenium.CreateMember(account, agreement);
-    	
-    	
 
 	 
     }

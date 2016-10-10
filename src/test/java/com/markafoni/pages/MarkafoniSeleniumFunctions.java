@@ -1,19 +1,25 @@
 package com.markafoni.pages;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.markafoni.helpers.GenericContaigner;
 import com.markafoni.helpers.GenericTuple;
 import com.markafoni.helpers.Helper;
 import com.markafoni.helpers.Pages;
@@ -219,5 +225,85 @@ public void MenuItem(){
 	 }
 }
 	
+/**
+ * Count items with given xpath in current page, return the result.
+ * @param path
+ * @return
+ */
+public int countItems(String path){
+	SeleniumHelper.RunAction(driver, waitVar, path, SeleniumAction.elementsSize,"");
+	return GenericContaigner.getInstance().getInteger();
+}	
+
+public String addNumToPath(String path, int i){
+	return path + "[" + i + "]";
+}
+
+/**
+ * Returns the attribute specified by attr parameter from the WebElement found by given path parameter
+ * @param path
+ * @param attr
+ * @return
+ */
+public String getAttributeOfElement(String path, String attr){
+	GenericContaigner.getInstance().setString(attr);
+	SeleniumHelper.RunAction(driver, waitVar, path, SeleniumAction.getAttribute,"");
+	return GenericContaigner.getInstance().getString();
+}
+
+
+public void goToUrl(String url){
+	SeleniumHelper.RunAction(driver, waitVar, url, SeleniumAction.get,"");
+}
+
+/**
+ * Returns the current url of the driver
+ * @return
+ */
+public String getCurrentUrl(){
+	SeleniumHelper.RunAction(driver, waitVar, "", SeleniumAction.getURL,"");
+	return GenericContaigner.getInstance().getString();
+}
+
+//Scroll Down 
+public static void scrollDown(AndroidDriver driver)
+{
+    try {
+        HashMap<String, String> scrollObject = new HashMap<String, String>();
+        RemoteWebElement element = (RemoteWebElement)driver.findElementByClassName("android.widget.ListView");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String widId = ((RemoteWebElement) element).getId();
+        scrollObject.put("text", "LastElementInList");
+        scrollObject.put("element", widId);
+        js.executeScript("mobile: scrollTo", scrollObject);
+       // System.out.println("Scroll id= "+widId);
+    } catch(Exception e) {   
+    	System.err.println(e.getMessage());
+    }
+   
+
+}
+
+public static void checkCampaignDetails(AndroidDriver driver){
+	
+	String path=Paths.CampaignXPath.getPath();
+	ArrayList<String> xPath=new ArrayList<>();
+	int count=0;
+	
+	for (int i=1;i<5;i++){
+		path=path + "["+i+"]";
+		xPath.add(path);
+		scrollDown(driver);
+		count=count+1;
+		//System.out.println(xPath);
+	}
+	
+	
+	
+	
+}
+
+
+
 	
 }
